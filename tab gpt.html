@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">
+  body{
+    background-color: #ccc;
+  }
+    input[type="text"],
+    input[type="number"] {
+      display: none;
+      margin-top: 10px;
+      padding-left: 10px;
+      width: 30%;
+      height: 30px;
+    }
+    label {
+      cursor: pointer;
+    }
+    label:hover {
+      text-decoration: underline;
+      color: blue;
+    }
+    form {
+      width: 70%;
+      
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform:translateY(50px);
+      background: #fff;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2),
+                  0 0 0 3px #FFFFFF,
+                  0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                  0 0 20px 0 rgba(0, 0, 0, 0.2),
+                  0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      animation: slide 4s ease alternate ;
+      transition: 4s ease;
+    }
+    @keyframes slide {
+      0% {
+        transform: translateY(-100px);
+      }
+      100% {
+        transform: translateY(100px);
+      }
+    }
+    button{
+      background-color: green;
+      color: #fff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <form id="form">
+    <label for="Fname">Enter your First name</label>
+    <br>
+    <input type="text" placeholder="Enter your First name" id="Fname" required>
+    <br>
+    <label for="Sname">Enter your middle name</label>
+    <br>
+    <input type="text" placeholder="Enter your middle name" id="Sname">
+    <br>
+    <label for="Lname">Enter your Last name</label>
+    <br>
+    <input type="text" placeholder="Enter your Last name" id="Lname" required>
+    <br>
+    <label for="age">Enter your Age</label>
+    <br>
+    <input type="number" placeholder="Enter your Age" id="age" required>
+    <br>
+    <label for="grade">Enter your grade</label>
+    <br>
+    <input type="text" placeholder="Enter your grade" id="grade" required>
+    <button type='submit' id="submitButton">Submit Here</button>
+  </form>
+  <div id="resultContainer"></div>
+
+  <script type="text/javascript">
+    var labels = document.getElementsByTagName('label');
+    var form = document.getElementById('form');
+    var result = document.getElementById('resultContainer');
+    var submitButton = document.getElementById('submitButton');
+    var inputs = form.querySelectorAll('input[required]');
+
+    for (var i = 0; i < labels.length; i++) {
+      var label = labels[i];
+      var inputId = label.getAttribute('for');
+      var input = document.getElementById(inputId);
+      var isClicked = false;
+
+      label.addEventListener('click', createToggleFunction(label, input));
+    }
+
+    function createToggleFunction(label, input) {
+      return function() {
+        if (!isClicked) {
+          input.style.display = 'block';
+          label.style.color = 'blue';
+          isClicked = true;
+          form.style.height = '80vh';
+        } else {
+          input.style.display = 'none';
+          label.style.color = '';
+          isClicked = false;
+          form.style.height = 'auto';
+        }
+      };
+    }
+
+    form.addEventListener('input', function() {
+      var allFilled = true;
+
+      inputs.forEach(function(input) {
+        if (input.value.trim() === '') {
+          allFilled = false;
+        }
+      });
+
+      if (allFilled) {
+        submitButton.disabled = false;
+      } else {
+        submitButton.disabled = true;
+      }
+    });
+
+    class Student {
+      constructor(firstname) {
+        this.firstname = firstname;
+      }
+    }
+  </script>
+  <script type="text/javascript">
+  var submitButton = document.getElementById('submitButton');
+  window.addEventListener('load',() => {
+    Notification.requestPermission().then(perm => {
+      if(perm === "granted") {
+        new Notification('You will be receiving updates')
+      }
+    })
+  });
+  submitButton.addEventListener('load',() => {
+    Notification.requestPermission().then(perm => {
+      if(perm === "granted") {
+        new Notification('Your form has been submitted successfully.')
+      }
+    })
+  });
+  </script>
+</body>
+</html>
